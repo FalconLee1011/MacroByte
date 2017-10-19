@@ -103,12 +103,12 @@
     }
 
     @-webkit-keyframes animatebottom {
-      from { bottom:-100px; opacity:0 } 
+      from { bottom:-100px; opacity:0 }
       to { bottom:0px; opacity:1 }
     }
 
-    @keyframes animatebottom { 
-      from{ bottom:-100px; opacity:0 } 
+    @keyframes animatebottom {
+      from{ bottom:-100px; opacity:0 }
       to{ bottom:0; opacity:1 }
     }
 
@@ -768,7 +768,7 @@ Blockly.Blocks['mt7688_pinmax'] = {
       </table>
   </tr>
   <tr>
-    
+
 	    <table width="100%">
 		<tr>
 		<td>
@@ -779,7 +779,7 @@ Blockly.Blocks['mt7688_pinmax'] = {
 			-->
 	  </td>
 	  </tr>
-    
+
 	  <tr>
 		<td>
 	  <div id="zone_joystick">
@@ -795,21 +795,21 @@ Blockly.Blocks['mt7688_pinmax'] = {
 <!--			  <input type="submit" value="Send">  -->
 <!--		  </form>  -->
         <button id="start_stream">Start Stream</button>
-        <button onclick="return !window.open('http://'+window.location.hostname+':8080', 'WebCam', 'width=500,height=500')">Open WebCam Window</button>        
+        <button onclick="return !window.open('http://'+window.location.hostname+':8080', 'WebCam', 'width=500,height=500')">Open WebCam Window</button>
 <!--        port:<input type="text" id="webcam_port" value="8080" disabled> -->
         <button id="stop_stream">Stop Stream</button>
         <button id="run_program" class="button_run secondary">RUN</button>
         <button id="stop_program" class="button_stop">STOP</button>
-        
+
         <br>
         Board Version:<input type="text" id="boardVersion" disabled>Current Version:<input type="text" id="currentVersion" disabled>
         <button id="check_version">Check Version</button>
         <button id="software_update">Update</button>
-          
+
 	  </td>
 	  </tr>
 	</table>
-  
+
   </tr>
 </table>
   <!--<div id="blocklyDiv" style="height: 400px"></div>-->
@@ -1361,7 +1361,7 @@ Blockly.Blocks['mt7688_pinmax'] = {
 	}
   // loader
   document.getElementById("loader").style.display = "none";
-  
+
   manager.on('added', function (evt, nipple) {
       nipple.on('start move end dir plain', function (evt) {
           // DO EVERYTHING
@@ -1396,63 +1396,65 @@ Blockly.Blocks['mt7688_pinmax'] = {
   }).on('removed', function (evt, nipple) {
       nipple.off('start move end dir plain');
   });
-  var lastkey='';
-	var newkey='';
-  $(document).keydown(function (e) {
-      if ($(".input:focus") && (e.keyCode === 13)) {
-        onSubmit();
-      }
-      if ($(".input:focus") && (e.keyCode === 37)) {
-	      newkey = "KEY_LEFT_PRESS\n";
-        if (lastkey != newkey) {
-	        ws.send(newkey);
-          lastkey = newkey;
+    //WASD Hacked by falconXCLi
+    //this allows you to use ASWD to control your mechaCar like gaming!
+    var lastkey='';
+  	var newkey='';
+    $(document).keydown(function (e) {
+        if ($(".input:focus") && (e.keyCode === 13)) {
+          onSubmit();
         }
-      }
-      if ($(".input:focus") && (e.keyCode === 38)) {
-	      if (lastkey != newkey) {
-  	      newkey = "KEY_UP_PRESS\n";
-  	      ws.send(newkey);
-          lastkey = newkey;
-	      }
-      }
-      if ($(".input:focus") && (e.keyCode === 39)) {
-	      if (lastkey != newkey) {
-  	      newkey = "KEY_RIGHT_PRESS\n";
-  	      ws.send(newkey);
-          lastkey = newkey;
-	      }
-      }
-      if ($(".input:focus") && (e.keyCode === 40)) {
-	      if (lastkey != newkey) {
-  	      newkey = "KEY_DOWN_PRESS\n";
-  	      ws.send(newkey);
-          lastkey = newkey;
-	      }
-      }
-   });
-   $(document).keyup(function (e) {
-     if ($(".input:focus") && (e.keyCode === 37)) {
-      newkey = "KEY_LEFT_UP\n";
-      ws.send(newkey);
-      lastkey = 0;
-     }
-     if ($(".input:focus") && (e.keyCode === 38)) {
-      newkey = "KEY_UP_UP\n";
-      ws.send(newkey);
-      lastkey = 0;
-     }
-     if ($(".input:focus") && (e.keyCode === 39)) {
-      newkey = "KEY_RIGHT_UP\n";
-      ws.send(newkey);
-      lastkey = 0;
-     }
-     if ($(".input:focus") && (e.keyCode === 40)) {
-      newkey = "KEY_DOWN_UP\n";
-      ws.send(newkey);
-      lastkey = 0;
-     }
-   });
+        if ($(".input:focus") && (e.keyCode === 65 || e.keyCode === 37)) {
+  	      newkey = "KEY_LEFT_PRESS\n";
+          if (lastkey != newkey) {
+  	        ws.send(newkey);
+            lastkey = newkey;
+          }
+        }
+        if ($(".input:focus") && (e.keyCode === 87 || e.keyCode === 38)) {
+  	      if (lastkey != newkey) {
+    	      newkey = "KEY_UP_PRESS\n";
+    	      ws.send(newkey);
+            lastkey = newkey;
+  	      }
+        }
+        if ($(".input:focus") && (e.keyCode === 68 || e.keyCode === 39)) {
+  	      if (lastkey != newkey) {
+    	      newkey = "KEY_RIGHT_PRESS\n";
+    	      ws.send(newkey);
+            lastkey = newkey;
+  	      }
+        }
+        if ($(".input:focus") && (e.keyCode === 83 || e.keyCode === 40)) {
+  	      if (lastkey != newkey) {
+    	      newkey = "KEY_DOWN_PRESS\n";
+    	      ws.send(newkey);
+            lastkey = newkey;
+  	      }
+        }
+     });
+     $(document).keyup(function (e) {
+       if ($(".input:focus") && (e.keyCode === 65 || e.keyCode === 37)) {
+        newkey = "KEY_LEFT_UP\n";
+        ws.send(newkey);
+        lastkey = 0;
+       }
+       if ($(".input:focus") && (e.keyCode === 87 || e.keyCode === 38)) {
+        newkey = "KEY_UP_UP\n";
+        ws.send(newkey);
+        lastkey = 0;
+       }
+       if ($(".input:focus") && (e.keyCode === 68 || e.keyCode === 39)) {
+        newkey = "KEY_RIGHT_UP\n";
+        ws.send(newkey);
+        lastkey = 0;
+       }
+       if ($(".input:focus") && (e.keyCode === 83 || e.keyCode === 40)) {
+        newkey = "KEY_DOWN_UP\n";
+        ws.send(newkey);
+        lastkey = 0;
+       }
+     });
 
     var ws;
     var wsStatus;
